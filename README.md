@@ -6,7 +6,7 @@ OpaqueSense 是一个面向黑盒加密流量分析的基础模型项目。它�
 
 当前项目主要面向中文安全算法、网络安全和 AI 安全工程场景。仓库提供模型核心模块、数据接口、训练配置、评估工具、部署接口和可运行的合成数据 Demo。
 
-English version: [README.md](README.md)
+English version: [README_EN.md](README_EN.md)
 
 ## 项目背景
 
