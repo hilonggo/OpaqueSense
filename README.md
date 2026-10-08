@@ -34,7 +34,6 @@ Transformer 编码器
 - 基于 Transformer 的流量表征学习
 - 面向恶意流量、VPN 和应用指纹的多任务检测接口
 - 面向未知类别和未知威胁的开放集检测扩展
-- 支持 ONNX Runtime 和 INT8 部署流程扩展
 - 使用合成数据展示输入格式，公开版本不包含真实流量
 
 ## 快速开始
@@ -88,13 +87,13 @@ OpaqueSense/
 ├── README.md                 # 中文项目说明
 ├── README_EN.md              # 英文对照说明
 ├── configs/                  # 预训练、微调和推理配置
-├── docs/                     # 架构、数据、训练、评估和部署说明
+├── docs/                     # 架构、数据、训练和评估说明
 ├── src/
 │   ├── models/               # 流量嵌入与 Transformer 模块
 │   ├── dataset/              # 数据校验、特征整理和批处理接口
 │   ├── training/             # 训练入口扩展
 │   ├── evaluation/           # 指标和评估工具
-│   └── deployment/           # 推理与部署接口
+│   └── deployment/           # 推理接口
 ├── demo/                     # 可运行的推理示例
 ├── examples/                 # 合成流量样例
 └── checkpoints/              # 权重放置说明
@@ -104,7 +103,7 @@ OpaqueSense/
 
 `src/models/traffic_embedding.py` 提供数值流量特征和协议特征的组合嵌入；`src/models/transformer_encoder.py` 提供基于多头注意力的序列编码器；`src/evaluation/metrics.py` 提供准确率和加权 F1 指标接口。
 
-训练和部署目录保留清晰的扩展入口，方便接入下游任务标签和经过验证的模型权重。
+训练和推理目录保留清晰的扩展入口，方便接入下游任务标签和经过验证的模型权重。
 
 ## 数据与隐私
 

@@ -14,7 +14,6 @@ Modern TLS 1.3, QUIC, and ECH reduce the visibility available to payload-oriente
 - Transformer traffic representation learning
 - Multi-task security detection interfaces
 - Open-set threat discovery hooks
-- ONNX and INT8 deployment utilities
 - Synthetic examples with no private traffic included
 
 ## Quick start
@@ -34,7 +33,7 @@ The demo consumes a JSON flow description and runs without PCAP files or externa
 - `src/dataset/` — public-data preprocessing and batching interfaces
 - `src/training/` — pretraining and downstream fine-tuning entry points
 - `src/evaluation/` — metrics and benchmark helpers
-- `src/deployment/` — export, quantization, and inference utilities
+- `src/deployment/` — inference utilities
 - `docs/` — architecture, data, training, experiments, and deployment notes
 - `examples/` — synthetic, payload-free flow examples
 
