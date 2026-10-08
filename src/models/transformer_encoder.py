@@ -1,4 +1,4 @@
-"""Transformer encoder for packet-sequence representations."""
+"""用于包序列表示学习的 Transformer 编码器。"""
 from torch import nn
 
 class TrafficTransformerEncoder(nn.Module):

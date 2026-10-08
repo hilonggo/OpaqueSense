@@ -85,8 +85,8 @@ VPN概率：0.36
 
 ```text
 OpaqueSense/
-├── README.md                 # English documentation
-├── README_CN.md              # 中文项目说明
+├── README.md                 # 中文项目说明
+├── README_EN.md              # 英文对照说明
 ├── configs/                  # 预训练、微调和推理配置
 ├── docs/                     # 架构、数据、训练、评估和部署说明
 ├── src/

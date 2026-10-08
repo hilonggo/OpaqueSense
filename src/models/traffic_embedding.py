@@ -1,4 +1,4 @@
-"""Protocol-aware embedding for payload-free packet metadata."""
+"""面向不含载荷内容的包级元数据的协议感知嵌入。"""
 from __future__ import annotations
 import torch
 from torch import nn

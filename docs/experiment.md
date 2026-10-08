@@ -1,1 +1,3 @@
-# Evaluation`n`nAccuracy and weighted F1 helpers are provided. The demo is a smoke test, not a benchmark claim.
+# 评估
+
+项目提供准确率和加权 F1 指标接口，也可以扩展开放集检测的阈值评估。当前 Demo 只用于验证输入和推理流程，不代表任何数据集上的基准结果。

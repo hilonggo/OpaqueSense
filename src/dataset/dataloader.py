@@ -1,4 +1,4 @@
-"""Small batching helpers for normalized flow dictionaries."""
+"""为规范化流量记录提供批处理辅助函数。"""
 from __future__ import annotations
 import numpy as np
 

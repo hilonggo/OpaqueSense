@@ -1,1 +1,3 @@
-# Training`n`nPretraining learns packet-sequence representations; fine-tuning attaches security task heads.
+# 训练
+
+预训练阶段从无标签流量元数据中学习包序列表示；下游微调阶段为恶意流量检测、VPN 识别和应用分类等任务接入任务头。训练时应记录数据划分、特征格式和随机种子。

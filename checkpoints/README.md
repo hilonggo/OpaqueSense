@@ -1,3 +1,3 @@
-# Checkpoints
+# 模型权重
 
-Trained weights are intentionally not bundled. Place an authorized checkpoint here and keep large binary artifacts out of Git history. The demo runs with deterministic synthetic scoring so the repository remains self-contained.
+仓库不直接附带训练权重。你可以将经过授权的模型权重放在此目录中，并避免把大型二进制文件提交到 Git 历史。当前 Demo 使用确定性的合成评分，因此无需下载权重即可运行。
