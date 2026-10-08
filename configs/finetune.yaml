@@ -1,0 +1,3 @@
+task: malware
+num_classes: 2
+batch_size: 32

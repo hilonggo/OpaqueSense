@@ -1,0 +1,2 @@
+device: cpu
+provider: onnxruntime

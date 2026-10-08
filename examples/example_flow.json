@@ -1,0 +1,6 @@
+{
+  "protocol": "TLS",
+  "packet_lengths": [512, 64, 128, 1024],
+  "directions": [1, 0, 1, 1],
+  "iat": [0.02, 0.15, 0.03, 0.08]
+}
