@@ -2,6 +2,8 @@
 
 ## A Foundation Model for Black-box Encrypted Traffic Intelligence
 
+中文说明：[README_CN.md](README_CN.md)
+
 OpaqueSense learns general-purpose representations from encrypted network traffic without inspecting payload content. The public project provides a modular Transformer pipeline for traffic embedding, self-supervised pretraining, downstream security detection, open-set discovery, and edge deployment.
 
 Modern TLS 1.3, QUIC, and ECH reduce the visibility available to payload-oriented DPI. OpaqueSense uses flow metadata, packet-sequence patterns, and protocol-aware embeddings to produce a reusable traffic representation for malware detection, VPN identification, application fingerprinting, and unknown-threat discovery.
