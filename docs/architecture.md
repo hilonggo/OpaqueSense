@@ -1,6 +1,6 @@
 # 模型架构
 
-项目按 burst/token 记录组织输入。批处理时保留各 burst 的边界信息，同时将 burst 依次展平到 token 序列维度。每个 token 位置融合 token ID、方向/字节数/间隔/包数四项 burst 元数据和单流协议嵌入。
+OpaqueSense 面向黑盒流量分析，将一条流表示为按时间排列的 burst/token 记录。批处理时保留各 burst 的边界信息，同时将 burst 依次展平到 token 序列维度。每个 token 位置融合 token ID、方向/字节数/间隔/包数四项 burst 元数据和单流协议嵌入，Transformer 再对序列上下文进行编码。
 
 ```text
 单条记录

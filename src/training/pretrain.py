@@ -10,7 +10,7 @@ from src.models import TrafficEmbedding, TrafficTransformerEncoder
 
 
 class TrafficRepresentationModel(nn.Module):
-    """将包级特征编码为可供下游任务使用的序列表示。"""
+    """将 burst/token 记录编码为可供下游任务使用的序列表示。"""
 
     def __init__(
         self,

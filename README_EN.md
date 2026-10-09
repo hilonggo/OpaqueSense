@@ -1,8 +1,18 @@
 # OpaqueSense
 
-## Foundation model for black-box encrypted traffic analysis
+## Traffic representation model for black-box encrypted traffic analysis
 
-OpaqueSense uses flow records organized as **bursts**. Protocol is a per-flow integer input, separate from the token sequence, and is fused with token and burst metadata embeddings.
+OpaqueSense targets traffic-analysis settings where applications cannot rely directly on cleartext payloads. It provides a Transformer-based representation pipeline built around **burst/token sequences, protocol context, and burst-level traffic metadata**. A flow is represented by time-ordered burst tokens together with direction, byte count, inter-burst timing, and packet-count signals; the transport protocol is supplied as a separate per-flow condition. The resulting flow representation can be connected to downstream tasks such as malicious-traffic detection, VPN analysis, and application fingerprinting.
+
+The project treats the data path and model interface as one design: validation and collation preserve burst boundaries while producing padded `[B,L]` tensors; the embedding layer combines token, metadata, and protocol representations; the Transformer models sequence context; and a task head adapts the representation to a specific security classification problem.
+
+### Highlights
+
+- Encrypted-traffic modeling without relying on decrypted application-layer semantics
+- Protocol-aware multi-branch embeddings with a per-flow protocol condition
+- Burst boundaries retained through BOS markers and `dataset_burst_sizes`
+- Explicit preprocessing, batching, masking, representation, classification, and inference interfaces
+- A reusable flow representation for security-algorithm and network-security tasks
 
 中文说明：[README.md](README.md)
 
