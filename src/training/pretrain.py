@@ -14,31 +14,35 @@ class TrafficRepresentationModel(nn.Module):
 
     def __init__(
         self,
-        feature_dim: int = 3,
+        vocab_size: int = 65538,
         hidden_dim: int = 128,
-        protocol_vocab: int = 32,
+        protocol_vocab: int = 18,
         layers: int = 4,
         heads: int = 4,
         dropout: float = 0.1,
     ):
         super().__init__()
-        self.embedding = TrafficEmbedding(feature_dim, hidden_dim, protocol_vocab)
+        self.embedding = TrafficEmbedding(vocab_size, hidden_dim, protocol_vocab)
         self.encoder = TrafficTransformerEncoder(hidden_dim, layers, heads, dropout)
 
     def forward(
         self,
-        features: torch.Tensor,
-        protocol_id: torch.Tensor,
+        input_ids: torch.Tensor,
+        direction: torch.Tensor,
+        iats: torch.Tensor,
+        bytes_: torch.Tensor,
+        pkt_count: torch.Tensor,
+        protocol: torch.Tensor,
         padding_mask: torch.Tensor | None = None,
     ) -> torch.Tensor:
-        embedded = self.embedding(features, protocol_id)
+        embedded = self.embedding(input_ids, direction, iats, bytes_, pkt_count, protocol)
         return self.encoder(embedded, padding_mask)
 
 
 def build_representation_model(config: Mapping | None = None) -> TrafficRepresentationModel:
     """根据 YAML 配置字典构建表示模型。"""
     values = dict(config or {})
-    keys = ("feature_dim", "hidden_dim", "protocol_vocab", "layers", "heads", "dropout")
+    keys = ("vocab_size", "hidden_dim", "protocol_vocab", "layers", "heads", "dropout")
     return TrafficRepresentationModel(**{key: values[key] for key in keys if key in values})
 
 

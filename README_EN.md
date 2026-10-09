@@ -1,46 +1,59 @@
 # OpaqueSense
 
-## A Foundation Model for Black-box Encrypted Traffic Intelligence
+## Foundation model for black-box encrypted traffic analysis
+
+OpaqueSense uses flow records organized as **bursts**. Protocol is a per-flow integer input, separate from the token sequence, and is fused with token and burst metadata embeddings.
 
 中文说明：[README.md](README.md)
 
-OpaqueSense learns general-purpose representations from encrypted network traffic without inspecting payload content. The public project provides a modular Transformer pipeline for traffic embedding, representation learning, downstream classification, and inference.
+## Input record
 
-Modern TLS 1.3, QUIC, and ECH reduce the visibility available to payload-oriented DPI. OpaqueSense uses flow metadata, packet-sequence patterns, and protocol-aware embeddings to produce a reusable traffic representation for malware detection, VPN identification, and application fingerprinting.
+```json
+{
+  "flow_duration": 183,
+  "burst_tokens": [[450, 12, 2048, 33], [9, 1024, 18]],
+  "directions": [1, 0],
+  "bytes": [2560, 1033],
+  "iats": [0, 42],
+  "counts": [4, 3],
+  "protocol": 6,
+  "labels": "example"
+}
+```
 
-## Highlights
+`burst_tokens` is a two-dimensional list of raw values in `[0,65535]`; batching shifts them by one to reserve token ID 0 for padding. `directions` uses booleans in the raw record and is normalized to `1` (forward) or `-1` (reverse). The four burst metadata arrays have one value per burst. `iats` follows the source unit conversion (`×1e-3`, integer). `protocol` is ICMP=`1`, TCP=`6`, or UDP=`17`; `labels` is optional.
 
-- Payload-independent encrypted-traffic understanding
-- Transformer traffic representation learning
-- A reusable classification head for downstream security tasks
-- Evaluation helpers for comparing downstream predictions
-- Synthetic examples with no private traffic included
+## Model tensors
+
+`collate_flows()` pads each batch and flattens bursts into the token axis:
+
+| Field | Shape |
+| --- | --- |
+| `input_ids`, `attention_mask` | `[B,L]` |
+| `direction`, `bytes`, `iats`, `pkt_count` | `[B,L]` |
+| `protocol` | `[B]` |
+| `dataset_burst_sizes` | `[B,max_bursts]` |
+
+The model call is `model(input_ids, direction, iats, bytes, pkt_count, protocol, padding_mask=...)`.
 
 ## Quick start
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
+source .venv/bin/activate
 pip install -r requirements.txt
 python demo/inference_demo.py --input examples/example_flow.json
 ```
 
-The demo consumes a JSON flow description and runs without PCAP files or external services. Its scores are deterministic demonstration values rather than results from a trained checkpoint.
+The demo validates the record and prints padded tensor shapes without loading weights or producing predictions.
 
-## Repository guide
+## Pipeline
 
-- `src/models/` — packet metadata embeddings and Transformer components
-- `src/dataset/` — public-data preprocessing and batching interfaces
-- `src/training/` — representation model and classification head
-- `src/evaluation/` — classification metrics
-- `src/deployment/` — inference utilities
-- `docs/` — architecture, data, training, and evaluation notes
-- `examples/` — synthetic, payload-free flow examples
-
-## Project scope
-
-The current version contains model components, configuration templates, and synthetic flow examples. It does not bundle real traffic samples or pretrained weights. The preprocessing interface derives a stable integer `protocol_id` from the human-readable protocol name. See `docs/dataset.md` for the feature schema.
+```text
+burst/token record → validation and padding → [B,L] token and metadata + [B] protocol
+→ fused embeddings → Transformer encoder → flow representation → downstream head
+```
 
 ## License
 
-Released under the MIT License. See [LICENSE](LICENSE).
+MIT License. See [LICENSE](LICENSE).

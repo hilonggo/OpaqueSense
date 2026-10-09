@@ -1,6 +1,10 @@
 {
-  "protocol": "TLS",
-  "packet_lengths": [512, 64, 128, 1024],
-  "directions": [1, 0, 1, 1],
-  "iat": [0.02, 0.15, 0.03, 0.08]
+  "flow_duration": 183,
+  "burst_tokens": [[450, 12, 2048, 33], [9, 1024, 18]],
+  "directions": [true, false],
+  "bytes": [2560, 1033],
+  "iats": [0, 42000],
+  "counts": [4, 3],
+  "protocol": 6,
+  "labels": "示例"
 }

@@ -1,3 +1,3 @@
 # 训练
 
-`src/training/pretrain.py` 提供流量表示模型，将包级特征嵌入后交给 Transformer 编码器；`src/training/finetune.py` 在序列表示上附加通用分类头。配置模板中的模型维度、层数和类别数与对应的构建函数保持一致。
+`src/training/pretrain.py` 的表示模型接收 collator 生成的 token ID、方向、字节数、间隔、包数和协议张量；序列字段形状为 `[B,L]`，协议形状为 `[B]`，可选 padding mask 为 `[B,L]`。`src/training/finetune.py` 使用同一输入接口并在序列池化后输出分类 logits。模型维度等参数见 `configs/`。

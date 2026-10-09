@@ -2,26 +2,19 @@ from __future__ import annotations
 import argparse, json, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.dataset.preprocessing import normalize_flow
-
-def predict(flow):
-    lengths = flow["packet_lengths"]
-    burstiness = float(lengths.std() / (lengths.mean() + 1e-6))
-    vpn = min(0.99, max(0.01, 0.25 + 0.12 * burstiness))
-    malware = min(0.99, max(0.01, 0.10 + 0.08 * burstiness + 0.03 * (len(lengths) > 8)))
-    return malware, vpn, "web_tls" if flow["protocol"].upper() == "TLS" else "unknown"
+from src.dataset import collate_flows, normalize_flow
 
 def main():
-    parser = argparse.ArgumentParser(description="运行 OpaqueSense 合成流量演示")
+    parser = argparse.ArgumentParser(description="检查 burst/token 流量输入并展示模型批次形状")
     parser.add_argument("--input", required=True, help="JSON 流量样例路径")
     args = parser.parse_args()
     flow = normalize_flow(json.loads(Path(args.input).read_text(encoding="utf-8")))
-    malware, vpn, app = predict(flow)
-    print(f"协议：{flow['protocol']}")
-    print("\n演示输出（非训练模型预测）：")
-    print(f"恶意流量演示分数：{malware:.2f}")
-    print(f"VPN 演示分数：{vpn:.2f}")
-    print(f"应用类别示例：{app}")
+    batch = collate_flows([flow])
+    print(f"协议编号：{flow['protocol']}")
+    print(f"burst 数量：{len(flow['burst_tokens'])}")
+    print(f"input_ids 形状：{tuple(batch['input_ids'].shape)}")
+    print(f"attention_mask 形状：{tuple(batch['attention_mask'].shape)}")
+    print("该示例只验证输入整理，不加载训练权重，也不输出分类预测。")
 
 if __name__ == "__main__":
     main()

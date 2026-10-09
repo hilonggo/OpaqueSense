@@ -1,1 +1,7 @@
 device: cpu
+vocab_size: 65538
+hidden_dim: 128
+protocol_vocab: 18
+layers: 4
+heads: 4
+dropout: 0.1

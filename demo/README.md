@@ -6,4 +6,4 @@
 python demo/inference_demo.py --input examples/example_flow.json
 ```
 
-Demo 会读取不包含载荷内容的合成流量记录，完成字段校验并输出协议、演示分数和应用类别示例。分数由固定规则生成，不代表训练模型预测。
+示例会读取 burst/token 流量记录，完成字段校验，并输出补齐后 `input_ids` 和 `attention_mask` 的形状。该示例不加载权重或输出分类预测。
