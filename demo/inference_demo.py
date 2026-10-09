@@ -12,16 +12,16 @@ def predict(flow):
     return malware, vpn, "web_tls" if flow["protocol"].upper() == "TLS" else "unknown"
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--input", required=True)
+    parser = argparse.ArgumentParser(description="运行 OpaqueSense 合成流量演示")
+    parser.add_argument("--input", required=True, help="JSON 流量样例路径")
     args = parser.parse_args()
     flow = normalize_flow(json.loads(Path(args.input).read_text(encoding="utf-8")))
     malware, vpn, app = predict(flow)
     print(f"协议：{flow['protocol']}")
-    print("\n预测结果：")
-    print(f"恶意流量概率：{malware:.2f}")
-    print(f"VPN概率：{vpn:.2f}")
-    print(f"应用类别：{app}")
+    print("\n演示输出（非训练模型预测）：")
+    print(f"恶意流量演示分数：{malware:.2f}")
+    print(f"VPN 演示分数：{vpn:.2f}")
+    print(f"应用类别示例：{app}")
 
 if __name__ == "__main__":
     main()

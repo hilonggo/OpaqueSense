@@ -4,16 +4,16 @@
 
 中文说明：[README.md](README.md)
 
-OpaqueSense learns general-purpose representations from encrypted network traffic without inspecting payload content. The public project provides a modular Transformer pipeline for traffic embedding, self-supervised pretraining, downstream security detection, open-set discovery, and edge deployment.
+OpaqueSense learns general-purpose representations from encrypted network traffic without inspecting payload content. The public project provides a modular Transformer pipeline for traffic embedding, representation learning, downstream classification, and inference.
 
-Modern TLS 1.3, QUIC, and ECH reduce the visibility available to payload-oriented DPI. OpaqueSense uses flow metadata, packet-sequence patterns, and protocol-aware embeddings to produce a reusable traffic representation for malware detection, VPN identification, application fingerprinting, and unknown-threat discovery.
+Modern TLS 1.3, QUIC, and ECH reduce the visibility available to payload-oriented DPI. OpaqueSense uses flow metadata, packet-sequence patterns, and protocol-aware embeddings to produce a reusable traffic representation for malware detection, VPN identification, and application fingerprinting.
 
 ## Highlights
 
 - Payload-independent encrypted-traffic understanding
 - Transformer traffic representation learning
-- Multi-task security detection interfaces
-- Open-set threat discovery hooks
+- A reusable classification head for downstream security tasks
+- Evaluation helpers for comparing downstream predictions
 - Synthetic examples with no private traffic included
 
 ## Quick start
@@ -25,21 +25,21 @@ pip install -r requirements.txt
 python demo/inference_demo.py --input examples/example_flow.json
 ```
 
-The demo consumes a JSON flow description and runs without PCAP files or external services. It is intended to show the public data contract and inference flow; replace the lightweight demo model with a trained checkpoint for production use.
+The demo consumes a JSON flow description and runs without PCAP files or external services. Its scores are deterministic demonstration values rather than results from a trained checkpoint.
 
 ## Repository guide
 
 - `src/models/` — packet metadata embeddings and Transformer components
 - `src/dataset/` — public-data preprocessing and batching interfaces
-- `src/training/` — pretraining and downstream fine-tuning entry points
+- `src/training/` — representation model and classification head
 - `src/evaluation/` — metrics and benchmark helpers
 - `src/deployment/` — inference utilities
-- `docs/` — architecture, data, training, experiments, and deployment notes
+- `docs/` — architecture, data, training, and evaluation notes
 - `examples/` — synthetic, payload-free flow examples
 
-## Data and privacy
+## Project scope
 
-This repository contains no real PCAP files, enterprise traffic, private checkpoints, credentials, or internal configuration. Use synthetic data or traffic that you are authorized to process. See `docs/dataset.md` for the expected feature schema.
+The current version contains model components, configuration templates, and synthetic flow examples. It does not bundle real traffic samples or pretrained weights. See `docs/dataset.md` for the feature schema.
 
 ## License
 
