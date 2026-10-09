@@ -32,14 +32,14 @@ The demo consumes a JSON flow description and runs without PCAP files or externa
 - `src/models/` — packet metadata embeddings and Transformer components
 - `src/dataset/` — public-data preprocessing and batching interfaces
 - `src/training/` — representation model and classification head
-- `src/evaluation/` — metrics and benchmark helpers
+- `src/evaluation/` — classification metrics
 - `src/deployment/` — inference utilities
 - `docs/` — architecture, data, training, and evaluation notes
 - `examples/` — synthetic, payload-free flow examples
 
 ## Project scope
 
-The current version contains model components, configuration templates, and synthetic flow examples. It does not bundle real traffic samples or pretrained weights. See `docs/dataset.md` for the feature schema.
+The current version contains model components, configuration templates, and synthetic flow examples. It does not bundle real traffic samples or pretrained weights. The preprocessing interface derives a stable integer `protocol_id` from the human-readable protocol name. See `docs/dataset.md` for the feature schema.
 
 ## License
 

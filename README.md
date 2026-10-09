@@ -73,7 +73,7 @@ VPN 演示分数：0.36
 }
 ```
 
-- `protocol`：协议类型，例如 `TLS`；
+- `protocol`：协议类型，例如 `TLS`。预处理接口会同时生成模型使用的 `protocol_id`；
 - `packet_lengths`：包长度序列；
 - `directions`：包方向序列；
 - `iat`：相邻数据包之间的时间间隔序列。
@@ -91,7 +91,7 @@ OpaqueSense/
 ├── src/
 │   ├── models/               # 流量嵌入与 Transformer 模块
 │   ├── dataset/              # 数据校验、特征整理和批处理接口
-│   ├── training/             # 训练入口扩展
+│   ├── training/             # 表示模型与分类头
 │   ├── evaluation/           # 指标和评估工具
 │   └── deployment/           # 推理接口
 ├── demo/                     # 可运行的推理示例
@@ -101,7 +101,7 @@ OpaqueSense/
 
 ## 模型组件
 
-`src/models/traffic_embedding.py` 提供数值流量特征和协议特征的组合嵌入；`src/models/transformer_encoder.py` 提供基于多头注意力的序列编码器；`src/evaluation/metrics.py` 提供准确率和加权 F1 指标接口。
+`src/models/traffic_embedding.py` 提供数值流量特征和协议编号的组合嵌入；`src/models/transformer_encoder.py` 提供基于多头注意力的序列编码器；`src/evaluation/metrics.py` 提供准确率和加权 F1 指标接口。`src/dataset/preprocessing.py` 负责把协议名称转换为稳定编号。
 
 训练目录包含表示模型和分类头，推理目录提供统一的模型调用接口。
 

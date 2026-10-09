@@ -5,6 +5,17 @@ from typing import Mapping
 import numpy as np
 
 REQUIRED = ("protocol", "packet_lengths", "directions", "iat")
+PROTOCOL_IDS = {"TLS": 0, "QUIC": 1, "TCP": 2, "UDP": 3, "DNS": 4, "HTTP": 5}
+
+
+def protocol_to_id(protocol: str, vocabulary_size: int = 32) -> int:
+    """将协议名称映射为模型使用的稳定整数编号。"""
+    if vocabulary_size < 2:
+        raise ValueError("vocabulary_size 必须至少为 2")
+    normalized = str(protocol).strip().upper()
+    if not normalized:
+        raise ValueError("protocol 不能为空")
+    return PROTOCOL_IDS.get(normalized, vocabulary_size - 1)
 
 def normalize_flow(flow: Mapping) -> dict:
     missing = [key for key in REQUIRED if key not in flow]
@@ -29,4 +40,4 @@ def normalize_flow(flow: Mapping) -> dict:
         raise ValueError("packet_lengths 和 iat 不能为负数")
     if not np.isin(directions, (0, 1)).all():
         raise ValueError("directions 只能包含 0 或 1")
-    return {"protocol": protocol, "packet_lengths": lengths, "directions": directions, "iat": iat}
+    return {"protocol": protocol, "protocol_id": protocol_to_id(protocol), "packet_lengths": lengths, "directions": directions, "iat": iat}
